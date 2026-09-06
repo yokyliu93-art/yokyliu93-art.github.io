@@ -1,0 +1,20 @@
+PRAGMA foreign_keys = ON;
+PRAGMA journal_mode = WAL;
+CREATE TABLE IF NOT EXISTS users(id TEXT PRIMARY KEY,name TEXT NOT NULL,created_at TEXT NOT NULL);
+CREATE TABLE IF NOT EXISTS account_logins(user_id TEXT PRIMARY KEY REFERENCES users(id),email TEXT NOT NULL UNIQUE,password_salt TEXT NOT NULL,password_hash TEXT NOT NULL,created_at TEXT NOT NULL);
+CREATE TABLE IF NOT EXISTS islands(id TEXT PRIMARY KEY,owner_id TEXT NOT NULL UNIQUE REFERENCES users(id),name TEXT NOT NULL,revision INTEGER NOT NULL DEFAULT 0,discoverable INTEGER NOT NULL DEFAULT 0,scene TEXT NOT NULL,created_at TEXT NOT NULL);
+CREATE TABLE IF NOT EXISTS credentials(id TEXT PRIMARY KEY,user_id TEXT NOT NULL REFERENCES users(id),island_id TEXT REFERENCES islands(id),kind TEXT NOT NULL CHECK(kind IN ('human','agent')),token_hash TEXT NOT NULL UNIQUE,scopes TEXT NOT NULL,expires_at TEXT NOT NULL,revoked_at TEXT,created_at TEXT NOT NULL);
+CREATE TABLE IF NOT EXISTS audit(id INTEGER PRIMARY KEY AUTOINCREMENT,actor_id TEXT NOT NULL REFERENCES users(id),credential_id TEXT NOT NULL REFERENCES credentials(id),island_id TEXT REFERENCES islands(id),action TEXT NOT NULL,detail TEXT NOT NULL,created_at TEXT NOT NULL);
+CREATE TABLE IF NOT EXISTS encounter_rounds(day TEXT PRIMARY KEY,created_at TEXT NOT NULL);
+CREATE TABLE IF NOT EXISTS encounters(id TEXT PRIMARY KEY,island_a TEXT NOT NULL REFERENCES islands(id),island_b TEXT NOT NULL REFERENCES islands(id),day TEXT NOT NULL,probability REAL NOT NULL,compatibility REAL NOT NULL,draw REAL NOT NULL,occurred INTEGER NOT NULL,explanation TEXT NOT NULL,created_at TEXT NOT NULL,UNIQUE(island_a,island_b,day));
+CREATE TABLE IF NOT EXISTS encounters_seen(encounter_id TEXT NOT NULL REFERENCES encounters(id),user_id TEXT NOT NULL REFERENCES users(id),PRIMARY KEY(encounter_id,user_id));
+CREATE TABLE IF NOT EXISTS bonds(id TEXT PRIMARY KEY,island_a TEXT NOT NULL REFERENCES islands(id),island_b TEXT NOT NULL REFERENCES islands(id),proposed_by TEXT NOT NULL REFERENCES users(id),accepted_by TEXT REFERENCES users(id),status TEXT NOT NULL CHECK(status IN ('pending','active','declined','separated')),created_at TEXT NOT NULL,ended_at TEXT);
+CREATE UNIQUE INDEX IF NOT EXISTS bond_pair ON bonds(island_a,island_b) WHERE status IN ('pending','active');
+CREATE TABLE IF NOT EXISTS shared_spaces(id TEXT PRIMARY KEY,bond_id TEXT NOT NULL UNIQUE REFERENCES bonds(id),revision INTEGER NOT NULL DEFAULT 0,archived INTEGER NOT NULL DEFAULT 0);
+CREATE TABLE IF NOT EXISTS shared_objects(id TEXT PRIMARY KEY,space_id TEXT NOT NULL REFERENCES shared_spaces(id),owner_id TEXT NOT NULL REFERENCES users(id),payload TEXT NOT NULL);
+CREATE TABLE IF NOT EXISTS returned_objects(id TEXT PRIMARY KEY,owner_id TEXT NOT NULL REFERENCES users(id),source_space TEXT NOT NULL REFERENCES shared_spaces(id),payload TEXT NOT NULL,returned_at TEXT NOT NULL);
+CREATE TABLE IF NOT EXISTS blocks(user_id TEXT NOT NULL REFERENCES users(id),blocked_user_id TEXT NOT NULL REFERENCES users(id),PRIMARY KEY(user_id,blocked_user_id));
+CREATE TABLE IF NOT EXISTS settings(key TEXT PRIMARY KEY,value TEXT NOT NULL);
+CREATE TABLE IF NOT EXISTS creations(id TEXT PRIMARY KEY,island_id TEXT NOT NULL REFERENCES islands(id),owner_id TEXT NOT NULL REFERENCES users(id),credential_id TEXT NOT NULL REFERENCES credentials(id),revision INTEGER NOT NULL,prompt TEXT NOT NULL,status TEXT NOT NULL,summary TEXT,error TEXT,before_scene TEXT NOT NULL,created_at TEXT NOT NULL,updated_at TEXT NOT NULL);
+
+CREATE TABLE IF NOT EXISTS user_preferences(user_id TEXT PRIMARY KEY REFERENCES users(id),payload TEXT NOT NULL,source TEXT NOT NULL DEFAULT 'user_onboarding',updated_at TEXT NOT NULL);

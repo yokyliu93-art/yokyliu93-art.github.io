@@ -1,0 +1,13 @@
+import {existsSync} from 'node:fs';
+import {spawn} from 'node:child_process';
+import {mkdtemp,writeFile,readFile,rm} from 'node:fs/promises';
+import {tmpdir} from 'node:os';
+import {join} from 'node:path';
+import {PROGRAM_GUIDE,validateProgram} from './island-program.js';
+const schema={type:'object',additionalProperties:false,properties:{summary:{type:'string'},source:{type:'string'}},required:['summary','source']};
+let running=false;
+export function creatorEnabled(){return process.env.ISLAND_LOCAL_CODEX==='1';}
+export function reserveCreator(){if(running)throw Object.assign(new Error('Agent 正在处理另一个请求，请稍后再试'),{status:429});running=true;}
+export function releaseCreator(){running=false;}
+export async function generateScene(prompt,current,preferences=null){const dir=await mkdtemp(join(tmpdir(),'island-creator-'));try{const schemaPath=join(dir,'schema.json'),output=join(dir,'result.json');await writeFile(schemaPath,JSON.stringify(schema));const instruction=`You are a creative island game programmer. Write actual JavaScript implementing the user's request using this SDK. Return JSON with source and concise honest Chinese summary. You do not need shell tools; write the entire runnable code in source. Preserve existing custom code behavior except where requested otherwise. ${PROGRAM_GUIDE}\nUSER CONFIRMED PREFERENCES: ${JSON.stringify(preferences)}\nCURRENT SCENE AND PROGRAM: ${JSON.stringify(current)}\nUSER REQUEST: ${JSON.stringify(prompt)}`;
+await new Promise((resolve,reject)=>{const binary=process.env.ISLAND_CODEX_BIN||(existsSync('/Applications/ChatGPT.app/Contents/Resources/codex')?'/Applications/ChatGPT.app/Contents/Resources/codex':'codex');const child=spawn(binary,['exec','--ignore-user-config','-c','model_provider="island"','-c','model_providers.island={name="OpenAI",wire_api="responses",requires_openai_auth=true,supports_websockets=false}','--ephemeral','--sandbox','read-only','--skip-git-repo-check','--output-schema',schemaPath,'--output-last-message',output,'--color','never','-'],{cwd:dir,stdio:['pipe','ignore','pipe'],shell:false});let done=false;const timer=setTimeout(()=>{child.kill('SIGKILL');finish(new Error('Agent 响应超时，岛屿未改变，请重试'));},300000);function finish(e){if(done)return;done=true;clearTimeout(timer);e?reject(e):resolve();}child.on('error',()=>finish(new Error('无法启动本机 Codex，请检查安装与登录')));child.stderr.on('data',()=>{});child.on('exit',code=>finish(code===0?null:new Error('Codex 未完成创作，请检查本机登录与额度后重试')));child.stdin.on('error',()=>{});child.stdin.end(instruction);});const result=JSON.parse(await readFile(output,'utf8'));validateProgram(result.source);return {summary:result.summary,scene:{...current,program:result.source}};}finally{await rm(dir,{recursive:true,force:true});}}
