@@ -67,3 +67,20 @@ test('guided growth starts bare and only adds the chosen water and life',()=>{
  i=s.savePreferences(ca,{...p,water:'pond',animals:'rabbit'},i.revision);assert.equal(i.scene.objects.filter(o=>o.kind==='rabbit').length,3);assert(i.scene.objects.some(o=>o.kind==='pond'));assert(!i.scene.objects.some(o=>o.kind==='house'||o.kind==='tree'));
  s.db.close();
 });
+
+test('account memory is structured, weighted, amendable, deletable and isolated',()=>{
+ const {s,a,b,ca,cb}=fixture(),p={growing:true,water:'river',animals:'cat',light:'night',home:'open',landscape:'forest'};
+ s.savePreferences(ca,p,0,true);const own=s.memory(ca);assert.equal(own.settings.matchingEnabled,false);assert.equal(own.narratives.length,1);assert.equal(own.narratives[0].ntype,'preference');assert.equal(own.narratives[0].weight,.66);assert(own.narratives[0].source_links.length===1);assert.equal(s.memory(cb).narratives.length,0);
+ const added=s.writeMemory(ca,{content:'我喜欢夜里的森林和河流',tags:['森林','夜','河流'],importance:5,emotional:4,recurrence:3,unresolved:1});assert.equal(added.weight,.73);
+ const amendment=s.amendMemory(ca,added.id,'现在也愿意邀请别人来散步','对陪伴的理解改变了');assert.equal(amendment.narrativeId,added.id);assert.equal(s.memory(ca).narratives.find(x=>x.id===added.id).amendments.length,1);
+ rejects(()=>s.deleteMemory(cb,added.id),404);const agent=s.auth(s.issueAgent(ca,a.islandId).token);rejects(()=>s.memory(agent),403);s.deleteMemory(ca,added.id);assert(!s.memory(ca).narratives.some(x=>x.id===added.id));s.db.close();
+});
+
+test('relationship calculation uses memory only after both accounts opt in and never exposes raw text',()=>{
+ const {s,a,b,ca,cb}=fixture();s.visibility(ca,a.islandId,true);s.visibility(cb,b.islandId,true);
+ s.writeMemory(ca,{content:'只属于 A 的秘密原文',gesture:'喜欢在夜里的森林散步',tags:['森林','夜','陪伴']});s.writeMemory(cb,{content:'只属于 B 的秘密原文',gesture:'喜欢在在星夜的树林散步',tags:['森林','夜','陪伴']});
+ let score=s.world(ca)[0];assert.equal(score.explanation.memoryUsed,false);assert.equal(score.explanation.authorizedMemories,0);
+ s.memoryMatching(ca,true);score=s.world(ca)[0];assert.equal(score.explanation.memoryUsed,false);
+ s.memoryMatching(cb,true);score=s.world(ca)[0];assert.equal(score.explanation.memoryUsed,true);assert.equal(score.explanation.authorizedMemories,2);assert(score.explanation.memoryResonance>=90);assert(!JSON.stringify(score).includes('秘密原文'));
+ s.round(ca);const saved=s.db.prepare('SELECT components,algorithm_version FROM relationship_scores').get();assert.equal(saved.algorithm_version,'island-memory-v2');assert.equal(JSON.parse(saved.components).memoryUsed,true);s.db.close();
+});

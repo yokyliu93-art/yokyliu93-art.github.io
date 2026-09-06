@@ -16,6 +16,11 @@ else if(path==='/api/me'&&method==='GET')result=s.me(c);
 else if(path==='/api/preferences'&&method==='GET')result=s.preferences(c);
 else if(path==='/api/preferences'&&method==='POST')result=s.savePreferences(c,body.preferences,body.revision,body.remember);
 else if(path==='/api/preferences'&&method==='DELETE')result=s.forgetPreferences(c);
+else if(path==='/api/memory'&&method==='GET')result=s.memory(c);
+else if(path==='/api/memory'&&method==='POST')result=s.writeMemory(c,body);
+else if(path==='/api/memory/settings'&&method==='PUT')result=s.memoryMatching(c,body.matchingEnabled);
+else if(parts[1]==='memory'&&parts.length===3&&method==='DELETE')result=s.deleteMemory(c,id);
+else if(parts[1]==='memory'&&parts[3]==='amend'&&method==='POST')result=s.amendMemory(c,id,body.content,body.reason);
 else if(path==='/api/creator'&&method==='GET'){s.me(c);result={available:creatorEnabled(),provider:'Codex',mode:'local'};}
 else if(parts[1]==='creations'&&method==='GET')result=s.creation(c,id);
 else if(parts[1]==='islands'&&parts[3]==='coding-task'&&method==='GET')result=s.codingTask(c,id);

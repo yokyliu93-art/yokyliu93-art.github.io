@@ -30,6 +30,7 @@ ISLAND_LOCAL_CODEX=1 npm run dev
 关系、权限和旧室内工具保留在维护入口 `/?view=tools`，不再放在普通用户的创作流程中。旧房间数据不删除；缺少生态字段的旧岛会补充自然环境，保留原室内资产。
 
 - [数据库与产品规则](server/DATA-MODEL.md)
+- [账号记忆与关系计算](docs/memory-system.md)
 - [给 Codex / Claude Code 的修改契约](server/AGENT-CONTRACT.md)
 - `npm run test:server` 验证后端边界与事务。
 

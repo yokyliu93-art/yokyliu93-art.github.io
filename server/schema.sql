@@ -18,3 +18,72 @@ CREATE TABLE IF NOT EXISTS settings(key TEXT PRIMARY KEY,value TEXT NOT NULL);
 CREATE TABLE IF NOT EXISTS creations(id TEXT PRIMARY KEY,island_id TEXT NOT NULL REFERENCES islands(id),owner_id TEXT NOT NULL REFERENCES users(id),credential_id TEXT NOT NULL REFERENCES credentials(id),revision INTEGER NOT NULL,prompt TEXT NOT NULL,status TEXT NOT NULL,summary TEXT,error TEXT,before_scene TEXT NOT NULL,created_at TEXT NOT NULL,updated_at TEXT NOT NULL);
 
 CREATE TABLE IF NOT EXISTS user_preferences(user_id TEXT PRIMARY KEY REFERENCES users(id),payload TEXT NOT NULL,source TEXT NOT NULL DEFAULT 'user_onboarding',updated_at TEXT NOT NULL);
+
+-- Tideline-inspired account memory. Raw context and structured narrative are
+-- separated so a compact memory can always link back to its original source.
+CREATE TABLE IF NOT EXISTS memory_context(
+ id TEXT PRIMARY KEY,
+ user_id TEXT NOT NULL REFERENCES users(id) ON DELETE CASCADE,
+ island_id TEXT REFERENCES islands(id) ON DELETE CASCADE,
+ source TEXT NOT NULL CHECK(source IN ('onboarding','agent_dialogue','island_change','relationship','user_note')),
+ content TEXT NOT NULL,
+ meta TEXT NOT NULL DEFAULT '{}',
+ created_at TEXT NOT NULL
+);
+CREATE INDEX IF NOT EXISTS memory_context_owner_time ON memory_context(user_id,created_at DESC);
+CREATE TABLE IF NOT EXISTS memory_narratives(
+ id TEXT PRIMARY KEY,
+ user_id TEXT NOT NULL REFERENCES users(id) ON DELETE CASCADE,
+ island_id TEXT REFERENCES islands(id) ON DELETE CASCADE,
+ ntype TEXT NOT NULL CHECK(ntype IN ('preference','creation','relationship','reflection','general')),
+ gesture TEXT NOT NULL,
+ context_layer TEXT NOT NULL,
+ cognition_direction TEXT NOT NULL,
+ tags TEXT NOT NULL DEFAULT '[]',
+ related_entities TEXT NOT NULL DEFAULT '[]',
+ source_links TEXT NOT NULL DEFAULT '[]',
+ importance INTEGER NOT NULL CHECK(importance BETWEEN 1 AND 5),
+ emotional INTEGER NOT NULL CHECK(emotional BETWEEN 1 AND 5),
+ recurrence INTEGER NOT NULL CHECK(recurrence BETWEEN 1 AND 5),
+ unresolved INTEGER NOT NULL CHECK(unresolved BETWEEN 1 AND 5),
+ weight REAL NOT NULL CHECK(weight BETWEEN 0 AND 1),
+ created_at TEXT NOT NULL
+);
+CREATE INDEX IF NOT EXISTS memory_narratives_owner_time ON memory_narratives(user_id,created_at DESC);
+CREATE TABLE IF NOT EXISTS memory_amendments(
+ id TEXT PRIMARY KEY,
+ narrative_id TEXT NOT NULL REFERENCES memory_narratives(id) ON DELETE CASCADE,
+ user_id TEXT NOT NULL REFERENCES users(id) ON DELETE CASCADE,
+ content TEXT NOT NULL,
+ reason TEXT NOT NULL DEFAULT '',
+ created_at TEXT NOT NULL
+);
+CREATE TABLE IF NOT EXISTS memory_self_concept(
+ user_id TEXT NOT NULL REFERENCES users(id) ON DELETE CASCADE,
+ field TEXT NOT NULL CHECK(field IN ('fact','terrain','self_reflection')),
+ content TEXT NOT NULL,
+ updated_at TEXT NOT NULL,
+ PRIMARY KEY(user_id,field)
+);
+CREATE TABLE IF NOT EXISTS memory_self_concept_history(
+ id TEXT PRIMARY KEY,
+ user_id TEXT NOT NULL REFERENCES users(id) ON DELETE CASCADE,
+ field TEXT NOT NULL,
+ old_content TEXT NOT NULL,
+ archived_at TEXT NOT NULL
+);
+CREATE TABLE IF NOT EXISTS memory_settings(
+ user_id TEXT PRIMARY KEY REFERENCES users(id) ON DELETE CASCADE,
+ matching_enabled INTEGER NOT NULL DEFAULT 0,
+ updated_at TEXT NOT NULL
+);
+CREATE TABLE IF NOT EXISTS relationship_scores(
+ id TEXT PRIMARY KEY,
+ user_a TEXT NOT NULL REFERENCES users(id) ON DELETE CASCADE,
+ user_b TEXT NOT NULL REFERENCES users(id) ON DELETE CASCADE,
+ compatibility REAL NOT NULL,
+ components TEXT NOT NULL,
+ algorithm_version TEXT NOT NULL,
+ created_at TEXT NOT NULL
+);
+CREATE INDEX IF NOT EXISTS relationship_scores_pair_time ON relationship_scores(user_a,user_b,created_at DESC);
