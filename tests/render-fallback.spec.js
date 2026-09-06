@@ -12,7 +12,12 @@ test('homepage keeps the archipelago usable when WebGL is unavailable',async({pa
  await page.addInitScript(()=>{const original=HTMLCanvasElement.prototype.getContext;HTMLCanvasElement.prototype.getContext=function(type,...args){if(type.includes('webgl'))return null;return original.call(this,type,...args);};});
  await page.goto('/');
  await expect(page.locator('.cosmos-fallback')).toBeVisible();
- await expect(page.getByText('群岛轻盈模式')).toBeVisible();
+ await expect(page.getByText('群岛漫游模式')).toBeVisible();
+ const sky=page.locator('.fallback-sky');
+ await page.mouse.move(360,180);await page.mouse.down();await page.mouse.move(410,205);await page.mouse.up();
+ await expect(sky).toHaveClass(/is-controlled/);
+ const moved=await sky.evaluate(el=>el.style.transform);expect(moved).toContain('translate3d(50px, 25px');
+ await page.locator('#u-zoom-in').click();expect(await sky.evaluate(el=>el.style.transform)).toContain('scale(1.176');
  await expect(page.getByRole('heading',{name:/喜欢自己/})).toBeVisible();
  await expect(page.getByText('3D 世界暂时无法加载')).toHaveCount(0);
  await page.locator('#join').click();
