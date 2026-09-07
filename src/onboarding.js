@@ -14,7 +14,7 @@ function renderFallback(error){world=null;console.error('Island renderer failed'
 try{world=createWorld(stage,{...initial,objects:[],expansions:0},()=>{},()=>{},{ecosystemOnly:true,lightweight:!['localhost','127.0.0.1'].includes(location.hostname)||new URLSearchParams(location.search).has('low3d')});world.setEcology(initial);stage.classList.add('arrival-rendered');loadingNotice.hidden=true;stage.querySelector('canvas').addEventListener('webglcontextlost',()=>{loadingNotice.hidden=false;renderFallback('WebGL context lost');});}catch(error){world=null;renderFallback(error);}
 const customHints={water:'比如，一条流向天空的河，或藏在山洞里的地下湖。',world:'比如，一座会随潮汐开合的水母城。',animals:'比如，会发光的水母、温柔的龙，或者小时候陪伴我的狗。',light:'比如，每天都有很长的蓝调时刻，下雨时天空会亮起星星。',home:'比如，住在一朵云里，或者一艘可以四处旅行的船上。',landscape:'比如，倒着生长的森林，和流向天空的河。'};
 const questions=[
-{key:'water',title:'水，要怎样改变这座岛？',note:'它可以完全缺席，也可以成为岛的中心、道路，或越过悬崖落入云海。',choices:[['none','旷野高地','没有水，只有风与草穿过岛面'],['pond','镜面湖泊','一片完整静水，收住天空的倒影'],['river','蜿蜒溪谷','水从岛心穿过，分开两侧土地'],['waterfall','悬崖瀑布','溪流越过岛缘，坠入下方云海']]},
+{key:'world',title:'你想从哪一种世界，开始生活？',note:'先选一块差异足够大的起点。海洋、沙漠、平原和星球，会长出完全不同的生活。',choices:worldTemplates.map(template=>[template.id,template.name,template.subtitle])},
 {key:'animals',title:'想让谁，陪你住在岛上？',note:'选一位小小的邻居，看看它来到岛上的样子。',choices:[['rabbit','小兔子','在草地上慢慢走'],['cat','猫','一起晒太阳'],['bird','飞鸟','让天空热闹一点'],['none','暂时没有动物','先留一片安静']]},
 {key:'light',title:'想让哪段时光，停留得久一点？',note:'白天与夜晚都会到来，你可以让喜欢的那一段更长。',choices:[['day','更长的白天','草木明亮，适合四处走走'],['night','更长的夜晚','淡紫夜空，微光相伴'],['balanced','各一半','看着天色慢慢轮转']]},
 {key:'home',title:'要给自己，留一个怎样的住处？',note:'房子可以悬在空中，也可以一间都没有。',choices:[['open','不需要房子','整座岛都是我的栖息地'],['cottage','林间小屋','窗外就能看见树'],['floating','空中的房子','把窗开向云海']]},

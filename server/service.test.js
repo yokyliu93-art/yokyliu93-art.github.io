@@ -46,7 +46,7 @@ test('external coding credentials isolate jobs, validate source, preserve versio
 });
 test('world starters save reproducible variants and can restore previous code',()=>{
  const {s,a,ca}=fixture();const before=s.read(ca,a.islandId).scene;
- for(const world of ['planet','ocean','forest','society']){
+ for(const world of ['planet','ocean','desert','plain','forest','alpine','society']){
   const current=s.read(ca,a.islandId);const p={world,variant:42,animals:'cat',light:'night',home:'floating',landscape:'flowers'};
   const saved=s.savePreferences(ca,p,current.revision,true);assert.equal(saved.scene.worldTemplate,world);assert.equal(saved.scene.worldVariant,42);assert(saved.scene.program.includes('buildWorld'));assert.equal(s.preferences(ca).payload.world,world);
   s.undoCreation(ca,a.islandId);assert.deepEqual(s.read(ca,a.islandId).scene,before);

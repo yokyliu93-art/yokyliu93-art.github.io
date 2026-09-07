@@ -3,7 +3,7 @@ import {starterEcosystem} from '../server/ecosystem.js';
 import {applyPreferences} from '../server/preferences.js';
 import './visit.css';
 const params=new URLSearchParams(location.search),id=params.get('island'),demo=params.get('demo'),own=params.get('own')==='1';
-const names={forest:'林间来信',ocean:'潮汐停靠站',society:'晚灯小镇',planet:'星环旅居'};
+const names={forest:'林间来信',ocean:'潮汐停靠站',desert:'风的沙丘',plain:'无边草场',alpine:'雪线之上',society:'晚灯小镇',planet:'星环旅居'};
 const root=document.querySelector('#app');root.innerHTML=`<main id="visit-world"></main><header class="visit-header"><a href="/?view=studio">← 回我的岛</a><a href="/?view=universe">返回云海</a></header><section class="visit-panel"><small id="visit-kind">走近另一个人的世界</small><h1 id="visit-title">去远方，停留片刻。</h1><p id="visit-description">选择一座岛，落下来，慢慢走一走。</p><div id="visit-list"></div><button id="land" hidden>着陆到岛上 ↓</button><button id="takeoff" hidden>起飞 · 看看全岛</button><p id="visit-status" role="status"></p></section><div class="walk-hud" hidden><span>拖动环顾 · WASD / 方向键行走 · Esc 起飞</span><div class="walk-pad" aria-label="行走方向"><button data-walk="w" aria-label="向前走">↑</button><button data-walk="a" aria-label="向左走">←</button><button data-walk="s" aria-label="向后走">↓</button><button data-walk="d" aria-label="向右走">→</button></div></div>`;
 const status=text=>document.querySelector('#visit-status').textContent=text;
 async function api(path){const token=localStorage.getItem('our-island-owner-token');const response=await fetch('/api'+path,{headers:token?{Authorization:'Bearer '+token}:{},signal:AbortSignal.timeout(10000)});const data=await response.json();if(!response.ok)throw Error(data.error||'暂时无法探访');return data;}
