@@ -1,0 +1,4 @@
+{$ISLAND_DOMAIN} {
+  encode zstd gzip
+  reverse_proxy island:4174
+}

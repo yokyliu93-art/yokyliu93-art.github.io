@@ -1,0 +1,203 @@
+[
+  {
+    "id": "sofa",
+    "path": "/models/sofa.glb",
+    "source": "https://raw.githubusercontent.com/ATOAPaymentsLimited/atoa-bodhiorchard/main/frontend/public/assets/furniture/loungeSofa.glb",
+    "author": "Kenney",
+    "license": "CC0-1.0",
+    "sha256": "1886b811c0d3ad0d8525a4fd43adf4112c497c8e0ed906f06877ca3517f4c7dd",
+    "bytes": 9644
+  },
+  {
+    "id": "bed",
+    "path": "/models/bed.glb",
+    "source": "https://raw.githubusercontent.com/ATOAPaymentsLimited/atoa-bodhiorchard/main/frontend/public/assets/furniture/bedSingle.glb",
+    "author": "Kenney",
+    "license": "CC0-1.0",
+    "sha256": "ca00c63f9a12da3138d902b2f5f18e0360fb6e8a5ac42ccb4bc3f185724b65d1",
+    "bytes": 18636
+  },
+  {
+    "id": "desk",
+    "path": "/models/desk.glb",
+    "source": "https://raw.githubusercontent.com/ATOAPaymentsLimited/atoa-bodhiorchard/main/frontend/public/assets/furniture/desk.glb",
+    "author": "Kenney",
+    "license": "CC0-1.0",
+    "sha256": "0164fe828f028b321730fb8c74502e353583f751be74da1682d42fff7d3c5a42",
+    "bytes": 15048
+  },
+  {
+    "id": "chair",
+    "path": "/models/chair.glb",
+    "source": "https://raw.githubusercontent.com/ATOAPaymentsLimited/atoa-bodhiorchard/main/frontend/public/assets/furniture/chairCushion.glb",
+    "author": "Kenney",
+    "license": "CC0-1.0",
+    "sha256": "33544228984857f2cb502b58452fed72157335f9b1caf29e96da5c9094c53fdc",
+    "bytes": 12588
+  },
+  {
+    "id": "table",
+    "path": "/models/table.glb",
+    "source": "https://raw.githubusercontent.com/ATOAPaymentsLimited/atoa-bodhiorchard/main/frontend/public/assets/furniture/tableCoffee.glb",
+    "author": "Kenney",
+    "license": "CC0-1.0",
+    "sha256": "e38bea760fbd514efbb75528d09b4752c91af44677bbb97e6d4386c263525179",
+    "bytes": 8256
+  },
+  {
+    "id": "plant",
+    "path": "/models/plant.glb",
+    "source": "https://raw.githubusercontent.com/ATOAPaymentsLimited/atoa-bodhiorchard/main/frontend/public/assets/furniture/plantSmall1.glb",
+    "author": "Kenney",
+    "license": "CC0-1.0",
+    "sha256": "2b9c022feb47be857b2c4fdc29f36522766ba9b70c578c31d7c05d71b4377d15",
+    "bytes": 8224
+  },
+  {
+    "id": "lamp",
+    "path": "/models/lamp.glb",
+    "source": "https://raw.githubusercontent.com/ATOAPaymentsLimited/atoa-bodhiorchard/main/frontend/public/assets/furniture/lampRoundFloor.glb",
+    "author": "Kenney",
+    "license": "CC0-1.0",
+    "sha256": "50fe1b5b588edf15bfa9cc880f71a02a4fda6036350b24733d0ef4de5cc5e908",
+    "bytes": 6600
+  },
+  {
+    "id": "tree",
+    "path": "/models/tree.glb",
+    "source": "https://raw.githubusercontent.com/ATOAPaymentsLimited/atoa-bodhiorchard/main/frontend/public/assets/garden/tree_oak.glb",
+    "author": "Kenney",
+    "license": "CC0-1.0",
+    "sha256": "d7fd8773674928c50c11b66d12c636d49bdcc15a8b1c7fbb98e6f63a3439a3f3",
+    "bytes": 14644,
+    "runtimeUse": "Reference only; default scene uses original procedural geometry."
+  },
+  {
+    "id": "pine",
+    "path": "/models/pine.glb",
+    "source": "https://raw.githubusercontent.com/ATOAPaymentsLimited/atoa-bodhiorchard/main/frontend/public/assets/garden/pine_tree.glb",
+    "author": "Kenney",
+    "license": "CC0-1.0",
+    "sha256": "de378bdc2d1faf7e6b76f96ec4566231e39049753aa680397649900c74d0b0bb",
+    "bytes": 93688,
+    "runtimeUse": "Reference only; default scene uses original procedural geometry."
+  },
+  {
+    "id": "rock",
+    "path": "/models/rock.glb",
+    "source": "https://raw.githubusercontent.com/ATOAPaymentsLimited/atoa-bodhiorchard/main/frontend/public/assets/garden/rock_largeA.glb",
+    "author": "Kenney",
+    "license": "CC0-1.0",
+    "sha256": "6dd15390fd96501dcd1454765a17ba61dbbd8d47705dfe5149c8dd92b353ce25",
+    "bytes": 7552,
+    "runtimeUse": "Reference only; default scene uses original procedural geometry."
+  },
+  {
+    "id": "dog",
+    "path": "/models/dog.glb",
+    "source": "https://quaternius.com/packs/ultimateanimatedanimals.html",
+    "download": "https://raw.githubusercontent.com/wehrleymullanag18-design/mori-together/main/public/assets/pets/dog.glb",
+    "author": "Quaternius",
+    "license": "CC0-1.0",
+    "sha256": "07f8b5dd1bb3ec8bef7dda4eb1cd39dca00cfeba3512fe51c3dd2d00ee51386c",
+    "bytes": 1752188,
+    "animations": [
+      "Attack",
+      "Death",
+      "Eating",
+      "Gallop",
+      "Gallop_Jump",
+      "Idle",
+      "Idle_2",
+      "Idle_2_HeadLow",
+      "Idle_HitReact1",
+      "Idle_HitReact2",
+      "Jump_ToIdle",
+      "Walk"
+    ],
+    "changes": "Normalized runtime scale; mirror may include material and animation adaptations; see credits."
+  },
+  {
+    "id": "fox",
+    "path": "/models/fox.glb",
+    "source": "https://quaternius.com/packs/ultimateanimatedanimals.html",
+    "download": "https://raw.githubusercontent.com/wehrleymullanag18-design/mori-together/main/public/assets/pets/red-panda.glb",
+    "author": "Quaternius",
+    "license": "CC0-1.0",
+    "sha256": "6e2a80bb80a6ca53886d327b77583ce06e455a6f24ae021d43d1f04a6fde99f9",
+    "bytes": 1909888,
+    "animations": [
+      "Attack",
+      "Death",
+      "Eating",
+      "Gallop",
+      "Gallop_Jump",
+      "Idle",
+      "Idle_2",
+      "Idle_2_HeadLow",
+      "Idle_HitReact1",
+      "Idle_HitReact2",
+      "Jump_ToIdle",
+      "Walk"
+    ],
+    "changes": "Normalized runtime scale; mirror may include material and animation adaptations; see credits."
+  },
+  {
+    "id": "unicorn",
+    "path": "/models/unicorn.glb",
+    "source": "https://poly.pizza/m/0fVRHo65E-j",
+    "download": "https://static.poly.pizza/01956aaa-e321-425a-8cb1-a528c7c3f544.glb",
+    "author": "jeremy",
+    "license": "CC-BY-3.0",
+    "sha256": "eb5820253c305bb457f9e3c231e1fe37c2edcd0056e453482649e6b2e9211a39",
+    "bytes": 72560,
+    "animations": [],
+    "changes": "Normalized runtime scale; mirror may include material and animation adaptations; see credits."
+  },
+  {
+    "id": "cat",
+    "path": "/models/cat.glb",
+    "author": "J-Toastie",
+    "license": "CC-BY-3.0",
+    "source": "https://poly.pizza/m/DJ9rpAhrh3",
+    "download": "https://static.poly.pizza/8b3fc8b2-7eae-4b19-8084-d2fbd725bc58.glb",
+    "sha256": "2ed030946f552f2b46433294391628a37583ae74a496d3164c003e1f95b24e4e",
+    "bytes": 280840,
+    "changes": "Runtime scale normalization; original colors retained"
+  },
+  {
+    "id": "bird",
+    "path": "/models/bird.glb",
+    "author": "madtrollstudio",
+    "license": "CC-BY-3.0",
+    "source": "https://poly.pizza/m/HNrEIheuPK",
+    "download": "https://static.poly.pizza/fd2fc4ef-ed92-4592-904c-739d7453612a.glb",
+    "sha256": "bce7db4dd98c6605d8344192fe436d628e4927a132bc293d159ac79eadd883d6",
+    "bytes": 97852,
+    "changes": "Runtime scale normalization; original colors retained",
+    "runtimeUse": "Reference only; default scene uses original procedural geometry."
+  },
+  {
+    "id": "bear",
+    "path": "/models/bear.glb",
+    "author": "elkiotbear",
+    "license": "CC-BY-3.0",
+    "source": "https://poly.pizza/m/Wb5761uiZB",
+    "download": "https://static.poly.pizza/f48c1d2a-70a7-4113-9927-dc7500ab9b03.glb",
+    "sha256": "b3710701a3f0e3a831fc72a0db831e599ebb97f5ba1fac0feb4e9880a9ea6334",
+    "bytes": 58432,
+    "changes": "Runtime scale normalization; original colors retained"
+  },
+  {
+    "id": "rabbit",
+    "path": "/models/rabbit.glb",
+    "author": "Quaternius",
+    "license": "CC0-1.0",
+    "source": "https://poly.pizza/m/irZjWFARyl",
+    "download": "https://static.poly.pizza/084b5ebe-c3eb-4e64-9b17-06e2d1e3da5d.glb",
+    "sha256": "4a71eb8a80a573560fd93b39cd3c547c978d54ddd288b63000667df757dd50a2",
+    "bytes": 538360,
+    "changes": "Runtime scale normalization; original colors retained",
+    "runtimeUse": "Reference only; default scene uses original procedural geometry."
+  }
+]
