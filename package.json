@@ -4,11 +4,12 @@
   "private": true,
   "type": "module",
   "scripts": {
-    "dev": "vite --host 127.0.0.1",
+    "dev": "vite --host 0.0.0.0",
     "build": "vite build",
-    "preview": "vite preview --host 127.0.0.1",
+    "preview": "vite preview --host 0.0.0.0",
     "test": "playwright test",
-    "test:server": "node --test server/*.test.js"
+    "test:server": "node --test server/*.test.js",
+    "backup:db": "node scripts/backup-database.js"
   },
   "dependencies": {
     "@phosphor-icons/web": "^2.1.2",
