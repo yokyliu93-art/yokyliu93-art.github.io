@@ -1,0 +1,955 @@
+{
+  "people": {
+    "littleE": {
+      "personId": "littleE",
+      "parameters": {
+        "water_affinity": {
+          "value": 1,
+          "confidence": 0.5556,
+          "evidenceCount": 1,
+          "sources": [
+            "onboarding"
+          ]
+        },
+        "light_preference": {
+          "value": 0,
+          "confidence": 0.5556,
+          "evidenceCount": 1,
+          "sources": [
+            "onboarding"
+          ]
+        },
+        "shelter_need": {
+          "value": -1,
+          "confidence": 0.5556,
+          "evidenceCount": 1,
+          "sources": [
+            "onboarding"
+          ]
+        },
+        "fantasy_orientation": {
+          "value": 1,
+          "confidence": 0.6667,
+          "evidenceCount": 1,
+          "sources": [
+            "free_expression"
+          ]
+        },
+        "nature_orientation": {
+          "value": 1,
+          "confidence": 0.5556,
+          "evidenceCount": 1,
+          "sources": [
+            "onboarding"
+          ]
+        },
+        "world_mobility": {
+          "value": 1,
+          "confidence": 0.6667,
+          "evidenceCount": 1,
+          "sources": [
+            "free_expression"
+          ]
+        },
+        "environmental_motion": {
+          "value": 1,
+          "confidence": 0.6296,
+          "evidenceCount": 1,
+          "sources": [
+            "repeated_edit"
+          ]
+        },
+        "structure_need": {
+          "value": 0.55,
+          "confidence": 0.6296,
+          "evidenceCount": 1,
+          "sources": [
+            "repeated_edit"
+          ]
+        },
+        "social_openness": {
+          "value": 0.65,
+          "confidence": 0.6667,
+          "evidenceCount": 1,
+          "sources": [
+            "free_expression"
+          ]
+        },
+        "boundary_selectivity": {
+          "value": 1,
+          "confidence": 0.6667,
+          "evidenceCount": 1,
+          "sources": [
+            "free_expression"
+          ]
+        },
+        "caregiving_drive": {
+          "value": 1,
+          "confidence": 0.6667,
+          "evidenceCount": 1,
+          "sources": [
+            "free_expression"
+          ]
+        },
+        "symbolic_expression": {
+          "value": 1,
+          "confidence": 0.6667,
+          "evidenceCount": 1,
+          "sources": [
+            "free_expression"
+          ]
+        },
+        "domesticity": {
+          "value": -1,
+          "confidence": 0.5556,
+          "evidenceCount": 1,
+          "sources": [
+            "onboarding"
+          ]
+        },
+        "change_appetite": {
+          "value": 1,
+          "confidence": 1,
+          "evidenceCount": 2,
+          "sources": [
+            "repeated_edit"
+          ]
+        }
+      }
+    },
+    "yokyLiu": {
+      "personId": "yoky",
+      "parameters": {
+        "water_affinity": {
+          "value": 1,
+          "confidence": 0.5556,
+          "evidenceCount": 1,
+          "sources": [
+            "onboarding"
+          ]
+        },
+        "light_preference": {
+          "value": 0,
+          "confidence": 0.5556,
+          "evidenceCount": 1,
+          "sources": [
+            "onboarding"
+          ]
+        },
+        "shelter_need": {
+          "value": -1,
+          "confidence": 0.5556,
+          "evidenceCount": 1,
+          "sources": [
+            "onboarding"
+          ]
+        },
+        "fantasy_orientation": {
+          "value": 1,
+          "confidence": 0.6667,
+          "evidenceCount": 1,
+          "sources": [
+            "free_expression"
+          ]
+        },
+        "nature_orientation": {
+          "value": 1,
+          "confidence": 0.5556,
+          "evidenceCount": 1,
+          "sources": [
+            "onboarding"
+          ]
+        },
+        "environmental_motion": {
+          "value": 1,
+          "confidence": 0.6667,
+          "evidenceCount": 1,
+          "sources": [
+            "free_expression"
+          ]
+        },
+        "structure_need": {
+          "value": 0.55,
+          "confidence": 0.6667,
+          "evidenceCount": 1,
+          "sources": [
+            "free_expression"
+          ]
+        },
+        "symbolic_expression": {
+          "value": 0.85,
+          "confidence": 0.6667,
+          "evidenceCount": 1,
+          "sources": [
+            "free_expression"
+          ]
+        },
+        "domesticity": {
+          "value": -1,
+          "confidence": 0.5556,
+          "evidenceCount": 1,
+          "sources": [
+            "onboarding"
+          ]
+        },
+        "change_appetite": {
+          "value": 0.8,
+          "confidence": 1,
+          "evidenceCount": 2,
+          "sources": [
+            "repeated_edit"
+          ]
+        }
+      }
+    },
+    "yoky": {
+      "personId": "yoky",
+      "parameters": {
+        "water_affinity": {
+          "value": 1,
+          "confidence": 0.5556,
+          "evidenceCount": 1,
+          "sources": [
+            "onboarding"
+          ]
+        },
+        "light_preference": {
+          "value": 1,
+          "confidence": 0.5556,
+          "evidenceCount": 1,
+          "sources": [
+            "onboarding"
+          ]
+        },
+        "shelter_need": {
+          "value": 1,
+          "confidence": 0.5556,
+          "evidenceCount": 1,
+          "sources": [
+            "onboarding"
+          ]
+        },
+        "fantasy_orientation": {
+          "value": -0.65,
+          "confidence": 0.5556,
+          "evidenceCount": 1,
+          "sources": [
+            "onboarding"
+          ]
+        },
+        "nature_orientation": {
+          "value": 0.8,
+          "confidence": 0.5556,
+          "evidenceCount": 1,
+          "sources": [
+            "onboarding"
+          ]
+        },
+        "environmental_motion": {
+          "value": 0.35,
+          "confidence": 0.5556,
+          "evidenceCount": 1,
+          "sources": [
+            "onboarding"
+          ]
+        },
+        "structure_need": {
+          "value": 0.65,
+          "confidence": 0.5556,
+          "evidenceCount": 1,
+          "sources": [
+            "onboarding"
+          ]
+        },
+        "symbolic_expression": {
+          "value": -0.45,
+          "confidence": 0.5556,
+          "evidenceCount": 1,
+          "sources": [
+            "onboarding"
+          ]
+        },
+        "domesticity": {
+          "value": 1,
+          "confidence": 0.5556,
+          "evidenceCount": 1,
+          "sources": [
+            "onboarding"
+          ]
+        }
+      }
+    },
+    "vincent": {
+      "personId": "vincent",
+      "parameters": {
+        "water_affinity": {
+          "value": -1,
+          "confidence": 0.7407,
+          "evidenceCount": 1,
+          "sources": [
+            "user_confirmed"
+          ]
+        },
+        "light_preference": {
+          "value": -1,
+          "confidence": 0.5556,
+          "evidenceCount": 1,
+          "sources": [
+            "onboarding"
+          ]
+        },
+        "shelter_need": {
+          "value": 1,
+          "confidence": 0.5556,
+          "evidenceCount": 1,
+          "sources": [
+            "onboarding"
+          ]
+        },
+        "fantasy_orientation": {
+          "value": -0.2,
+          "confidence": 0.5556,
+          "evidenceCount": 1,
+          "sources": [
+            "onboarding"
+          ]
+        },
+        "nature_orientation": {
+          "value": 1,
+          "confidence": 0.5556,
+          "evidenceCount": 1,
+          "sources": [
+            "onboarding"
+          ]
+        },
+        "world_mobility": {
+          "value": -0.55,
+          "confidence": 0.5556,
+          "evidenceCount": 1,
+          "sources": [
+            "onboarding"
+          ]
+        },
+        "environmental_motion": {
+          "value": -0.4,
+          "confidence": 0.5556,
+          "evidenceCount": 1,
+          "sources": [
+            "onboarding"
+          ]
+        },
+        "structure_need": {
+          "value": 0.7,
+          "confidence": 0.5556,
+          "evidenceCount": 1,
+          "sources": [
+            "onboarding"
+          ]
+        },
+        "caregiving_drive": {
+          "value": 0.65,
+          "confidence": 0.6667,
+          "evidenceCount": 1,
+          "sources": [
+            "free_expression"
+          ]
+        },
+        "pair_bond_focus": {
+          "value": 1,
+          "confidence": 0.6667,
+          "evidenceCount": 1,
+          "sources": [
+            "free_expression"
+          ]
+        },
+        "symbolic_expression": {
+          "value": 0.45,
+          "confidence": 0.4444,
+          "evidenceCount": 1,
+          "sources": [
+            "scene_custom"
+          ]
+        },
+        "domesticity": {
+          "value": 0.85,
+          "confidence": 0.5556,
+          "evidenceCount": 1,
+          "sources": [
+            "onboarding"
+          ]
+        }
+      }
+    }
+  },
+  "graph": {
+    "algorithm": "island-social-v2",
+    "pairs": [
+      {
+        "a": "littleE",
+        "b": "yokyLiu",
+        "kind": "resonance",
+        "eligible": true,
+        "score": 99,
+        "confidence": 0.532,
+        "coverage": 0.379,
+        "distinctiveMatches": 7,
+        "details": [
+          {
+            "parameter": "shelter_need",
+            "group": "boundary",
+            "a": -1,
+            "b": -1,
+            "agreement": 1,
+            "information": 0.6666666666666667,
+            "confidence": 0.5556,
+            "weight": 0.3704
+          },
+          {
+            "parameter": "fantasy_orientation",
+            "group": "imagination",
+            "a": 1,
+            "b": 1,
+            "agreement": 1,
+            "information": 0.5125,
+            "confidence": 0.6667,
+            "weight": 0.34168374999999995
+          },
+          {
+            "parameter": "domesticity",
+            "group": "aesthetic",
+            "a": -1,
+            "b": -1,
+            "agreement": 1,
+            "information": 0.6541666666666666,
+            "confidence": 0.5556,
+            "weight": 0.29076399999999997
+          },
+          {
+            "parameter": "water_affinity",
+            "group": "aesthetic",
+            "a": 1,
+            "b": 1,
+            "agreement": 1,
+            "information": 0.5,
+            "confidence": 0.5556,
+            "weight": 0.2778
+          },
+          {
+            "parameter": "environmental_motion",
+            "group": "rhythm",
+            "a": 1,
+            "b": 1,
+            "agreement": 1,
+            "information": 0.4041666666666667,
+            "confidence": 0.6478844958787021,
+            "weight": 0.2356679853758779
+          },
+          {
+            "parameter": "light_preference",
+            "group": "rhythm",
+            "a": 0,
+            "b": 0,
+            "agreement": 1,
+            "information": 0.5,
+            "confidence": 0.5556,
+            "weight": 0.22224
+          },
+          {
+            "parameter": "symbolic_expression",
+            "group": "imagination",
+            "a": 1,
+            "b": 0.85,
+            "agreement": 0.925,
+            "information": 0.39583333333333337,
+            "confidence": 0.6667,
+            "weight": 0.21112166666666668
+          },
+          {
+            "parameter": "change_appetite",
+            "group": "rhythm",
+            "a": 1,
+            "b": 0.8,
+            "agreement": 0.9,
+            "information": 0.12,
+            "confidence": 1,
+            "weight": 0.096
+          },
+          {
+            "parameter": "structure_need",
+            "group": "rhythm",
+            "a": 0.55,
+            "b": 0.55,
+            "agreement": 1,
+            "information": 0.12,
+            "confidence": 0.6478844958787021,
+            "weight": 0.06219691160435541
+          },
+          {
+            "parameter": "nature_orientation",
+            "group": "aesthetic",
+            "a": 1,
+            "b": 1,
+            "agreement": 1,
+            "information": 0.12,
+            "confidence": 0.5556,
+            "weight": 0.046670399999999994
+          }
+        ],
+        "edge": true,
+        "reason": "threshold_and_mutual_best"
+      },
+      {
+        "a": "littleE",
+        "b": "yoky",
+        "kind": "resonance",
+        "eligible": true,
+        "score": 37,
+        "confidence": 0.464,
+        "coverage": 0.31,
+        "distinctiveMatches": 1,
+        "details": [
+          {
+            "parameter": "water_affinity",
+            "group": "aesthetic",
+            "a": 1,
+            "b": 1,
+            "agreement": 1,
+            "information": 0.5,
+            "confidence": 0.5556,
+            "weight": 0.2778
+          },
+          {
+            "parameter": "environmental_motion",
+            "group": "rhythm",
+            "a": 1,
+            "b": 0.35,
+            "agreement": 0.675,
+            "information": 0.4041666666666667,
+            "confidence": 0.5914437927647901,
+            "weight": 0.2151376796181924
+          },
+          {
+            "parameter": "structure_need",
+            "group": "rhythm",
+            "a": 0.55,
+            "b": 0.65,
+            "agreement": 0.95,
+            "information": 0.12,
+            "confidence": 0.5914437927647901,
+            "weight": 0.05677860410541985
+          },
+          {
+            "parameter": "nature_orientation",
+            "group": "aesthetic",
+            "a": 1,
+            "b": 0.8,
+            "agreement": 0.9,
+            "information": 0.12,
+            "confidence": 0.5556,
+            "weight": 0.046670399999999994
+          },
+          {
+            "parameter": "light_preference",
+            "group": "rhythm",
+            "a": 0,
+            "b": 1,
+            "agreement": 0.5,
+            "information": 0.5,
+            "confidence": 0.5556,
+            "weight": 0.22224
+          },
+          {
+            "parameter": "symbolic_expression",
+            "group": "imagination",
+            "a": 1,
+            "b": -0.45,
+            "agreement": 0.275,
+            "information": 0.39583333333333337,
+            "confidence": 0.6086201771219879,
+            "weight": 0.1927297227552962
+          },
+          {
+            "parameter": "fantasy_orientation",
+            "group": "imagination",
+            "a": 1,
+            "b": -0.65,
+            "agreement": 0.17500000000000004,
+            "information": 0.5125,
+            "confidence": 0.6086201771219879,
+            "weight": 0.3119178407750188
+          },
+          {
+            "parameter": "domesticity",
+            "group": "aesthetic",
+            "a": -1,
+            "b": 1,
+            "agreement": 0,
+            "information": 0.6541666666666666,
+            "confidence": 0.5556,
+            "weight": 0.29076399999999997
+          },
+          {
+            "parameter": "shelter_need",
+            "group": "boundary",
+            "a": -1,
+            "b": 1,
+            "agreement": 0,
+            "information": 0.6666666666666667,
+            "confidence": 0.5556,
+            "weight": 0.3704
+          }
+        ],
+        "edge": false,
+        "reason": "insufficient_significance"
+      },
+      {
+        "a": "littleE",
+        "b": "vincent",
+        "kind": "resonance",
+        "eligible": true,
+        "score": 29,
+        "confidence": 0.559,
+        "coverage": 0.396,
+        "distinctiveMatches": 0,
+        "details": [
+          {
+            "parameter": "symbolic_expression",
+            "group": "imagination",
+            "a": 1,
+            "b": 0.45,
+            "agreement": 0.725,
+            "information": 0.39583333333333337,
+            "confidence": 0.5443174441444992,
+            "weight": 0.17236719064575812
+          },
+          {
+            "parameter": "caregiving_drive",
+            "group": "relationship",
+            "a": 1,
+            "b": 0.65,
+            "agreement": 0.825,
+            "information": 0.17500000000000004,
+            "confidence": 0.6667,
+            "weight": 0.11667250000000003
+          },
+          {
+            "parameter": "structure_need",
+            "group": "rhythm",
+            "a": 0.55,
+            "b": 0.7,
+            "agreement": 0.925,
+            "information": 0.12,
+            "confidence": 0.5914437927647901,
+            "weight": 0.05677860410541985
+          },
+          {
+            "parameter": "nature_orientation",
+            "group": "aesthetic",
+            "a": 1,
+            "b": 1,
+            "agreement": 1,
+            "information": 0.12,
+            "confidence": 0.5556,
+            "weight": 0.046670399999999994
+          },
+          {
+            "parameter": "light_preference",
+            "group": "rhythm",
+            "a": 0,
+            "b": -1,
+            "agreement": 0.5,
+            "information": 0.5,
+            "confidence": 0.5556,
+            "weight": 0.22224
+          },
+          {
+            "parameter": "fantasy_orientation",
+            "group": "imagination",
+            "a": 1,
+            "b": -0.2,
+            "agreement": 0.4,
+            "information": 0.5125,
+            "confidence": 0.6086201771219879,
+            "weight": 0.3119178407750188
+          },
+          {
+            "parameter": "environmental_motion",
+            "group": "rhythm",
+            "a": 1,
+            "b": -0.4,
+            "agreement": 0.30000000000000004,
+            "information": 0.4041666666666667,
+            "confidence": 0.5914437927647901,
+            "weight": 0.2151376796181924
+          },
+          {
+            "parameter": "world_mobility",
+            "group": "imagination",
+            "a": 1,
+            "b": -0.55,
+            "agreement": 0.22499999999999998,
+            "information": 0.775,
+            "confidence": 0.6086201771219879,
+            "weight": 0.4245125735425866
+          },
+          {
+            "parameter": "domesticity",
+            "group": "aesthetic",
+            "a": -1,
+            "b": 0.85,
+            "agreement": 0.07499999999999996,
+            "information": 0.6541666666666666,
+            "confidence": 0.5556,
+            "weight": 0.29076399999999997
+          },
+          {
+            "parameter": "water_affinity",
+            "group": "aesthetic",
+            "a": 1,
+            "b": -1,
+            "agreement": 0,
+            "information": 0.5,
+            "confidence": 0.6415083163919233,
+            "weight": 0.32075415819596165
+          },
+          {
+            "parameter": "shelter_need",
+            "group": "boundary",
+            "a": -1,
+            "b": 1,
+            "agreement": 0,
+            "information": 0.6666666666666667,
+            "confidence": 0.5556,
+            "weight": 0.3704
+          }
+        ],
+        "edge": false,
+        "reason": "insufficient_significance"
+      },
+      {
+        "a": "yokyLiu",
+        "b": "yoky",
+        "kind": "same_person",
+        "eligible": false,
+        "edge": false
+      },
+      {
+        "a": "yokyLiu",
+        "b": "vincent",
+        "kind": "resonance",
+        "eligible": true,
+        "score": 28,
+        "confidence": 0.468,
+        "coverage": 0.314,
+        "distinctiveMatches": 0,
+        "details": [
+          {
+            "parameter": "symbolic_expression",
+            "group": "imagination",
+            "a": 0.85,
+            "b": 0.45,
+            "agreement": 0.8,
+            "information": 0.39583333333333337,
+            "confidence": 0.5443174441444992,
+            "weight": 0.17236719064575812
+          },
+          {
+            "parameter": "structure_need",
+            "group": "rhythm",
+            "a": 0.55,
+            "b": 0.7,
+            "agreement": 0.925,
+            "information": 0.12,
+            "confidence": 0.6086201771219879,
+            "weight": 0.05842753700371084
+          },
+          {
+            "parameter": "nature_orientation",
+            "group": "aesthetic",
+            "a": 1,
+            "b": 1,
+            "agreement": 1,
+            "information": 0.12,
+            "confidence": 0.5556,
+            "weight": 0.046670399999999994
+          },
+          {
+            "parameter": "light_preference",
+            "group": "rhythm",
+            "a": 0,
+            "b": -1,
+            "agreement": 0.5,
+            "information": 0.5,
+            "confidence": 0.5556,
+            "weight": 0.22224
+          },
+          {
+            "parameter": "fantasy_orientation",
+            "group": "imagination",
+            "a": 1,
+            "b": -0.2,
+            "agreement": 0.4,
+            "information": 0.5125,
+            "confidence": 0.6086201771219879,
+            "weight": 0.3119178407750188
+          },
+          {
+            "parameter": "environmental_motion",
+            "group": "rhythm",
+            "a": 1,
+            "b": -0.4,
+            "agreement": 0.30000000000000004,
+            "information": 0.4041666666666667,
+            "confidence": 0.6086201771219879,
+            "weight": 0.22138558942812311
+          },
+          {
+            "parameter": "domesticity",
+            "group": "aesthetic",
+            "a": -1,
+            "b": 0.85,
+            "agreement": 0.07499999999999996,
+            "information": 0.6541666666666666,
+            "confidence": 0.5556,
+            "weight": 0.29076399999999997
+          },
+          {
+            "parameter": "water_affinity",
+            "group": "aesthetic",
+            "a": 1,
+            "b": -1,
+            "agreement": 0,
+            "information": 0.5,
+            "confidence": 0.6415083163919233,
+            "weight": 0.32075415819596165
+          },
+          {
+            "parameter": "shelter_need",
+            "group": "boundary",
+            "a": -1,
+            "b": 1,
+            "agreement": 0,
+            "information": 0.6666666666666667,
+            "confidence": 0.5556,
+            "weight": 0.3704
+          }
+        ],
+        "edge": false,
+        "reason": "insufficient_significance"
+      },
+      {
+        "a": "yoky",
+        "b": "vincent",
+        "kind": "resonance",
+        "eligible": true,
+        "score": 60,
+        "confidence": 0.458,
+        "coverage": 0.302,
+        "distinctiveMatches": 2,
+        "details": [
+          {
+            "parameter": "shelter_need",
+            "group": "boundary",
+            "a": 1,
+            "b": 1,
+            "agreement": 1,
+            "information": 0.6666666666666667,
+            "confidence": 0.5556,
+            "weight": 0.3704
+          },
+          {
+            "parameter": "domesticity",
+            "group": "aesthetic",
+            "a": 1,
+            "b": 0.85,
+            "agreement": 0.925,
+            "information": 0.6541666666666666,
+            "confidence": 0.5556,
+            "weight": 0.29076399999999997
+          },
+          {
+            "parameter": "fantasy_orientation",
+            "group": "imagination",
+            "a": -0.65,
+            "b": -0.2,
+            "agreement": 0.775,
+            "information": 0.5125,
+            "confidence": 0.5556,
+            "weight": 0.28474499999999997
+          },
+          {
+            "parameter": "structure_need",
+            "group": "rhythm",
+            "a": 0.65,
+            "b": 0.7,
+            "agreement": 0.9750000000000001,
+            "information": 0.12,
+            "confidence": 0.5556,
+            "weight": 0.0533376
+          },
+          {
+            "parameter": "environmental_motion",
+            "group": "rhythm",
+            "a": 0.35,
+            "b": -0.4,
+            "agreement": 0.625,
+            "information": 0.4041666666666667,
+            "confidence": 0.5556,
+            "weight": 0.20209950000000002
+          },
+          {
+            "parameter": "nature_orientation",
+            "group": "aesthetic",
+            "a": 0.8,
+            "b": 1,
+            "agreement": 0.9,
+            "information": 0.12,
+            "confidence": 0.5556,
+            "weight": 0.046670399999999994
+          },
+          {
+            "parameter": "symbolic_expression",
+            "group": "imagination",
+            "a": -0.45,
+            "b": 0.45,
+            "agreement": 0.55,
+            "information": 0.39583333333333337,
+            "confidence": 0.49689902394752195,
+            "weight": 0.15735135758338198
+          },
+          {
+            "parameter": "light_preference",
+            "group": "rhythm",
+            "a": 1,
+            "b": -1,
+            "agreement": 0,
+            "information": 0.5,
+            "confidence": 0.5556,
+            "weight": 0.22224
+          },
+          {
+            "parameter": "water_affinity",
+            "group": "aesthetic",
+            "a": 1,
+            "b": -1,
+            "agreement": 0,
+            "information": 0.5,
+            "confidence": 0.6415083163919233,
+            "weight": 0.32075415819596165
+          }
+        ],
+        "edge": false,
+        "reason": "insufficient_significance"
+      }
+    ]
+  },
+  "relations": [
+    {
+      "from": "vincent",
+      "to": "yoky",
+      "type": "partner",
+      "status": "one_sided",
+      "strength": 0.35
+    }
+  ]
+}

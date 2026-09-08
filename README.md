@@ -29,8 +29,11 @@ ISLAND_LOCAL_CODEX=1 npm run dev
 
 关系、权限和旧室内工具保留在维护入口 `/?view=tools`，不再放在普通用户的创作流程中。旧房间数据不删除；缺少生态字段的旧岛会补充自然环境，保留原室内资产。
 
+岛屿心理画像与造岛模型完全分离。造岛 Agent 只提交合法场景程序；画像使用服务端 `ISLAND_ANALYSIS_API_KEY`（以及可选的 `ISLAND_ANALYSIS_BASE_URL`、`ISLAND_ANALYSIS_MODEL`）调用独立分析服务。未配置密钥时岛内信明确显示“等待分析服务”，不会用关键词模板冒充分析，且任何分析失败都不会影响岛屿保存。画像证据、重大改动版本和用户修正的 MBTI 均保存在服务端；详细触发规则见 [岛屿理解 Agent 落地说明](docs/island-reflection-implementation.md)。
+
 - [数据库与产品规则](server/DATA-MODEL.md)
 - [账号记忆与关系计算](docs/memory-system.md)
+- [社交网络与共鸣算法 v2](docs/social-network-v2.md)
 - [给 Codex / Claude Code 的修改契约](server/AGENT-CONTRACT.md)
 - `npm run test:server` 验证后端边界与事务。
 
