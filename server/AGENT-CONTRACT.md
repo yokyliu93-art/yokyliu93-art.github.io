@@ -63,3 +63,15 @@
 工作室通过 POST `/api/islands/:id/imagine` 提交 prompt，再轮询 GET `/api/creations/:id`。Agent 返回完整受限生态场景；后端检查所有权、原始 revision、物件白名单、数量与空间边界，验证成功后原子保存并撤销任务凭证。失败保留原岛。POST `/api/islands/:id/undo-creation` 可撤回最新成功变化。每人每天最多 10 次请求，每岛同时一个任务。
 
 默认新岛包含森林和水系，rooms 为空。生态字段 ecosystem 限定 biome（woodland/meadow/wetland/alpine）和 season（spring/summer/autumn/winter）。不接受脚本、网址、所有权或关系修改。
+
+## 2026-09 岛上生活接口更新
+
+以下更新优先于前文的旧原型说明。
+
+- 岛屿创作已支持隔离运行的 JavaScript SDK（`server/island-program.js`），服务端只验证及保存源码，不执行源码。Agent 返回 `source`、`summary`，并可通过 `sceneActions` JSON 字符串增加持久化房屋、房间、家具。用户自主编写的程序在 iframe/worker 中运行，经白名单渲染桥接。
+- `island.asset({id,kind,position,rotation,scale})` 支持本地动物与家具库，具体种类读取程序指南。兔子、小鸟为手工程序模型。
+- `room.upsert` 可包含 `houseId`，必须引用本岛室外 `house`，一房一屋。进入房屋后显示该房间的家具；游客没有装修权限。
+- 家具修改与房间缩放检查家具占地、墙壁、其他家具和入口通道，整批失败不改变版本。此为旋转包围盒检查，不是物理引擎。
+- `GET /api/avatar` 返回当前账号 `{revision,source}`。`PUT /api/avatar` 接受 `{revision,source}`，空字符串恢复初始形象。Agent 须单独授予 `avatar:write`，只能改凭证所属账号。岛主凭证也可调用；版本冲突为 409。
+- 玩家程序仅支持网格等基础 SDK，禁用外部模型加载，最多 48 网格、6000 顶点，x/z 在 ±1 米，y 在 0–2.4 米。浏览器编辑器先进行运行验证再保存；移动、相机、碰撞仍由宿主控制。
+- 示范页 `/?view=visit&demo=home` 的家具操作只存在于该页内存，不写入任何账号。

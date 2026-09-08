@@ -1,5 +1,9 @@
 PRAGMA foreign_keys = ON;
 PRAGMA journal_mode = WAL;
+CREATE TABLE IF NOT EXISTS agent_presence(credential_id TEXT PRIMARY KEY, user_id TEXT NOT NULL, island_id TEXT NOT NULL, name TEXT NOT NULL, hello TEXT NOT NULL, connected_at TEXT NOT NULL, last_seen TEXT NOT NULL);
+CREATE TABLE IF NOT EXISTS island_letters(id TEXT PRIMARY KEY,user_id TEXT NOT NULL,island_id TEXT NOT NULL,kind TEXT NOT NULL,source_key TEXT NOT NULL,input TEXT NOT NULL,status TEXT NOT NULL DEFAULT 'queued',report TEXT,error TEXT,attempts INTEGER NOT NULL DEFAULT 0,lease TEXT,lease_until TEXT,created_at TEXT NOT NULL,updated_at TEXT NOT NULL,UNIQUE(user_id,source_key));
+CREATE INDEX IF NOT EXISTS letters_owner ON island_letters(user_id,created_at DESC);
+CREATE TABLE IF NOT EXISTS island_letter_images(letter_id TEXT NOT NULL,panel INTEGER NOT NULL,user_id TEXT NOT NULL,mime TEXT NOT NULL,data BLOB NOT NULL,PRIMARY KEY(letter_id,panel));
 CREATE TABLE IF NOT EXISTS users(id TEXT PRIMARY KEY,name TEXT NOT NULL,created_at TEXT NOT NULL);
 CREATE TABLE IF NOT EXISTS account_logins(user_id TEXT PRIMARY KEY REFERENCES users(id),email TEXT NOT NULL UNIQUE,password_salt TEXT NOT NULL,password_hash TEXT NOT NULL,created_at TEXT NOT NULL);
 CREATE TABLE IF NOT EXISTS islands(id TEXT PRIMARY KEY,owner_id TEXT NOT NULL UNIQUE REFERENCES users(id),name TEXT NOT NULL,revision INTEGER NOT NULL DEFAULT 0,discoverable INTEGER NOT NULL DEFAULT 0,scene TEXT NOT NULL,created_at TEXT NOT NULL);
@@ -87,3 +91,15 @@ CREATE TABLE IF NOT EXISTS relationship_scores(
  created_at TEXT NOT NULL
 );
 CREATE INDEX IF NOT EXISTS relationship_scores_pair_time ON relationship_scores(user_a,user_b,created_at DESC);
+
+CREATE TABLE IF NOT EXISTS avatars(user_id TEXT PRIMARY KEY REFERENCES users(id),revision INTEGER NOT NULL DEFAULT 0,source TEXT NOT NULL,updated_at TEXT NOT NULL);
+
+CREATE TABLE IF NOT EXISTS memory_imports(user_id TEXT NOT NULL REFERENCES users(id),external_id TEXT NOT NULL,narrative_id TEXT NOT NULL REFERENCES memory_narratives(id) ON DELETE CASCADE,PRIMARY KEY(user_id,external_id));
+
+CREATE TABLE IF NOT EXISTS island_profiles(user_id TEXT PRIMARY KEY REFERENCES users(id),revision INTEGER NOT NULL,answers TEXT NOT NULL,profile TEXT NOT NULL,mirror TEXT NOT NULL,confirmed INTEGER NOT NULL DEFAULT 0,analysis_consent INTEGER NOT NULL DEFAULT 0,matching_consent INTEGER NOT NULL DEFAULT 0,snapshot TEXT,created_at TEXT NOT NULL,updated_at TEXT NOT NULL);
+CREATE TABLE IF NOT EXISTS island_profile_history(id TEXT PRIMARY KEY,user_id TEXT NOT NULL REFERENCES users(id),payload TEXT NOT NULL,revision INTEGER NOT NULL,created_at TEXT NOT NULL);
+CREATE TABLE IF NOT EXISTS island_daily_cards(id TEXT PRIMARY KEY,user_id TEXT NOT NULL REFERENCES users(id),day TEXT NOT NULL,text TEXT NOT NULL,evidence TEXT NOT NULL,favorite INTEGER NOT NULL DEFAULT 0,response TEXT,created_at TEXT NOT NULL,UNIQUE(user_id,day));
+CREATE INDEX IF NOT EXISTS island_card_owner_time ON island_daily_cards(user_id,created_at DESC);
+CREATE TABLE IF NOT EXISTS island_listening(user_id TEXT PRIMARY KEY REFERENCES users(id),track TEXT NOT NULL,updated_at TEXT NOT NULL);
+CREATE TABLE IF NOT EXISTS island_reflection_jobs(user_id TEXT PRIMARY KEY REFERENCES users(id),nonce TEXT NOT NULL,expires_at TEXT NOT NULL);
+CREATE TABLE IF NOT EXISTS island_psyche_preferences(user_id TEXT PRIMARY KEY REFERENCES users(id) ON DELETE CASCADE,mbti TEXT,updated_at TEXT NOT NULL);

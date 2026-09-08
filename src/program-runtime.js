@@ -1,9 +1,10 @@
+import {modelObject,MODEL_SIZES} from './model-library.js';
 import * as THREE from 'three';
 
 // Generated code lives in a worker inside an opaque-origin iframe, never in the app.
 function workerMain(){
   const send=postMessage.bind(self);let frame=()=>{},click=()=>{},commands=[];
-  const island=Object.freeze({mesh:value=>commands.push({op:'mesh',value}),move:(id,value)=>commands.push({op:'move',id,value}),onFrame:fn=>{frame=fn;},onClick:fn=>{click=fn;}});
+  const island=Object.freeze({mesh:value=>commands.push({op:'mesh',value}),asset:value=>commands.push({op:'asset',value}),move:(id,value)=>commands.push({op:'move',id,value}),onFrame:fn=>{frame=fn;},onClick:fn=>{click=fn;}});
   self.onmessage=e=>{try{commands=[];const m=e.data;if(m.type==='init')new Function('island','"use strict";\n'+m.source)(island);else if(m.type==='tick')frame(m.time);else if(m.type==='click')click(m.id);send({commands});}catch{send({error:'代码运行出错，请让 Agent 修正后重新提交。'});}};
 }
 function frameMain(workerSource){
@@ -12,13 +13,13 @@ function frameMain(workerSource){
     const stop=error=>{worker?.terminate();clearTimeout(timer);port.postMessage({error});};
     worker=new Worker(URL.createObjectURL(new Blob([workerSource],{type:'text/javascript'})));
     worker.onmessage=e=>{clearTimeout(timer);port.postMessage(e.data);};worker.onerror=()=>stop('代码运行出错，请让 Agent 修正后重新提交。');
-    port.onmessage=e=>{clearTimeout(timer);timer=setTimeout(()=>stop('代码运行时间超限，已停止这次运行。'),800);worker.postMessage(e.data);};port.postMessage({ready:true});
+    port.onmessage=e=>{clearTimeout(timer);timer=setTimeout(()=>stop('代码运行时间超限，已停止这次运行。'),e.data.type==='init'?8000:2000);worker.postMessage(e.data);};port.postMessage({ready:true});
   });
 }
-export function mountProgram(parent,canvas,camera,onStatus=()=>{}){
-  let iframe,port,timer,watchdog,group=null,source=null,waiting=false,start=0,stopped=false,vertices=0;
+export function mountProgram(parent,canvas,camera,onStatus=()=>{},options={}){
+  let iframe,port,timer,watchdog,group=null,source=null,waiting=false,start=0,stopped=false,vertices=0,assetCount=0;
   const meshes=new Map();
-  const cleanGroup=g=>{if(!g)return;g.traverse(m=>{m.geometry?.dispose();m.material?.dispose();});g.removeFromParent();};
+  const cleanGroup=g=>{if(!g)return;g.traverse(m=>{let asset=false;for(let p=m;p&&p!==g;p=p.parent)if(p.userData.model)asset=true;if(!asset){m.geometry?.dispose();m.material?.dispose();}});g.removeFromParent();};
   function stop(){clearInterval(timer);timer=null;clearTimeout(watchdog);port?.close();iframe?.remove();port=null;iframe=null;waiting=false;stopped=true;}
   function fail(error){stop();cleanGroup(group);group=null;meshes.clear();onStatus(error);}
   const vector=(v,def,min,max)=>{if(v===undefined)return def;if(!Array.isArray(v)||v.length!==3||v.some(x=>!Number.isFinite(x)||x<min||x>max))throw Error();return v;};
@@ -26,7 +27,8 @@ export function mountProgram(parent,canvas,camera,onStatus=()=>{}){
     mesh.position.set(...vector(value.position,mesh.position.toArray(),-14,14));
     mesh.scale.set(...vector(value.scale,mesh.scale.toArray(),.0001,20));
     mesh.rotation.set(...vector(value.rotation,mesh.rotation.toArray().slice(0,3),-10000,10000));
-    mesh.updateMatrix();mesh.geometry.computeBoundingBox();const bounds=mesh.geometry.boundingBox.clone().applyMatrix4(mesh.matrix);
+    mesh.updateMatrix();let localBounds;if(mesh.userData.assetBounds){const [x,y,z]=mesh.userData.assetBounds;localBounds=new THREE.Box3(new THREE.Vector3(-x/2,0,-z/2),new THREE.Vector3(x/2,y,z/2));}else{mesh.geometry.computeBoundingBox();localBounds=mesh.geometry.boundingBox;}const bounds=localBounds.clone().applyMatrix4(mesh.matrix);
+    if(options.avatar&&(bounds.min.x < -1||bounds.max.x>1||bounds.min.z < -1||bounds.max.z>1||bounds.min.y<0||bounds.max.y>2.4))throw Error();
     if(bounds.min.x < -10||bounds.max.x>10||bounds.min.z < -10||bounds.max.z>10||bounds.min.y < -7||bounds.max.y>14)throw Error();
   }
   function apply(commands){
@@ -34,13 +36,14 @@ export function mountProgram(parent,canvas,camera,onStatus=()=>{}){
     for(let commandIndex=0;commandIndex<commands.length;commandIndex++){const c=commands[commandIndex];try{
       const v=c.value;if(!v||typeof v!=='object')throw Error();
       if(c.op==='move'){const mesh=meshes.get(c.id);if(!mesh)throw Error();transform(mesh,v);continue;}
-      if(c.op!=='mesh'||meshes.size>=150||typeof v.id!=='string'||v.id.length>80||meshes.has(v.id)||!/^#[0-9a-f]{6}$/i.test(v.color))throw Error();
+      if(c.op==='asset'){if(options.avatar||assetCount>=32||!MODEL_SIZES[v.kind]||typeof v.id!=='string'||meshes.has(v.id))throw Error();const g=modelObject(v.kind);g.userData.assetBounds=MODEL_SIZES[v.kind];g.userData.programId=v.id;group.add(g);transform(g,v);meshes.set(v.id,g);assetCount++;continue;}
+      if(c.op!=='mesh'||meshes.size>=(options.avatar?48:150)||typeof v.id!=='string'||v.id.length>80||meshes.has(v.id)||!/^#[0-9a-f]{6}$/i.test(v.color))throw Error();
       let geo;
       switch(v.shape){
         case 'box':geo=new THREE.BoxGeometry(1,1,1);break;
-        case 'sphere':geo=new THREE.IcosahedronGeometry(.5,0);break;
+        case 'sphere':geo=new THREE.SphereGeometry(.5,v.detail==='high'?40:16,v.detail==='high'?28:12);break;
         case 'cone':geo=new THREE.ConeGeometry(.5,1,12);break;
-        case 'cylinder':geo=new THREE.CylinderGeometry(.5,.5,1,12);break;
+        case 'cylinder':geo=new THREE.CylinderGeometry(.5,.5,1,40);break;
         case 'custom':{
           const p=v.vertices,ix=v.indices;if(!Array.isArray(p)||!p.length||p.length%3||p.length>54000||p.some(x=>!Number.isFinite(x)||Math.abs(x)>30))throw Error();
           if(ix!==undefined&&(!Array.isArray(ix)||ix.length%3||ix.length>54000||ix.some(x=>!Number.isInteger(x)||x<0||x>=p.length/3)))throw Error();
@@ -48,14 +51,14 @@ export function mountProgram(parent,canvas,camera,onStatus=()=>{}){
         }
         default:throw Error();
       }
-      vertices+=geo.attributes.position.count;if(vertices>18000){geo.dispose();throw Error();}
-      const mesh=new THREE.Mesh(geo,new THREE.MeshStandardMaterial({color:v.color,roughness:.85,flatShading:true,side:THREE.DoubleSide}));
+      vertices+=geo.attributes.position.count;if(vertices>(options.avatar?6000:18000)){geo.dispose();throw Error();}
+      const mesh=new THREE.Mesh(geo,new THREE.MeshStandardMaterial({color:v.color,roughness:Number.isFinite(v.roughness)?Math.max(0,Math.min(1,v.roughness)):.85,flatShading:v.shape==='custom'&&!v.smooth,side:THREE.DoubleSide,...(typeof v.opacity==='number'&&v.opacity>=0&&v.opacity<1?{transparent:true,opacity:v.opacity,depthWrite:false}:{}),...(/^#[0-9a-f]{6}$/i.test(v.emissive||'')?{emissive:v.emissive,emissiveIntensity:.6}:{})}));
       group.add(mesh);transform(mesh,v);mesh.castShadow=true;mesh.receiveShadow=true;mesh.userData.programId=v.id;meshes.set(v.id,mesh);
       }catch(error){throw new Error(`第 ${commandIndex+1} 条 ${c?.op||'unknown'} 指令（${c?.id||c?.value?.id||'无编号'}）未通过边界检查`);}
     }
   }
-  function send(data){if(waiting||stopped)return;waiting=true;port.postMessage(data);watchdog=setTimeout(()=>fail('代码没有及时响应，已停止运行，原有生态仍然保留。'),1500);}
-  function load(next){if(next===source)return;source=next;stop();cleanGroup(group);group=null;meshes.clear();vertices=0;if(!next)return;
+  function send(data){if(waiting||stopped||(data.type==='tick'&&document.hidden))return;waiting=true;port.postMessage(data);watchdog=setTimeout(()=>fail('代码没有及时响应，已停止运行，原有生态仍然保留。'),data.type==='init'?12000:4000);}
+  function load(next){if(next===source)return;source=next;stop();cleanGroup(group);group=null;meshes.clear();vertices=0;assetCount=0;if(!next)return;
     stopped=false;group=new THREE.Group();parent.add(group);onStatus('正在检查并运行岛屿代码…');
     iframe=document.createElement('iframe');iframe.hidden=true;iframe.sandbox='allow-scripts';iframe.setAttribute('aria-hidden','true');
     const script=`(${frameMain.toString()})(${JSON.stringify('('+workerMain.toString()+')()')})`;
@@ -66,7 +69,7 @@ export function mountProgram(parent,canvas,camera,onStatus=()=>{}){
     };
     iframe.onload=()=>iframe.contentWindow.postMessage({},'*',[channel.port2]);document.body.append(iframe);
   }
-  canvas.addEventListener('click',e=>{if(!group||stopped)return;const rect=canvas.getBoundingClientRect();const ray=new THREE.Raycaster();ray.setFromCamera(new THREE.Vector2((e.clientX-rect.left)/rect.width*2-1,-(e.clientY-rect.top)/rect.height*2+1),camera);const hit=ray.intersectObjects(group.children)[0];if(hit)send({type:'click',id:hit.object.userData.programId});});
+  canvas.addEventListener('click',e=>{if(!group||stopped)return;const rect=canvas.getBoundingClientRect();const ray=new THREE.Raycaster();ray.setFromCamera(new THREE.Vector2((e.clientX-rect.left)/rect.width*2-1,-(e.clientY-rect.top)/rect.height*2+1),camera);const hit=ray.intersectObjects(group.children)[0];if(hit){let object=hit.object;while(object&&!object.userData.programId)object=object.parent;if(object)send({type:'click',id:object.userData.programId});}});
   addEventListener('pagehide',stop);
-  return {load,stats:()=>({meshes:meshes.size,stopped})};
+  return {load,dispose(){stop();cleanGroup(group);group=null;},stats:()=>({meshes:meshes.size,stopped})};
 }

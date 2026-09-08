@@ -1,0 +1,7 @@
+export function createAgentPresence(db,fail){
+ function status(userId){const rows=db.prepare(`SELECT p.name,p.hello,p.connected_at,p.last_seen FROM agent_presence p JOIN credentials c ON c.id=p.credential_id WHERE p.user_id=? AND c.revoked_at IS NULL AND c.expires_at>? AND c.kind='agent' ORDER BY p.last_seen DESC`).all(userId,new Date().toISOString());const agent=rows[0];return {connected:!!agent,online:!!agent&&Date.now()-Date.parse(agent.last_seen)<90000,...agent};}
+ function hello(c,id,input){if(c.kind!=='agent'||c.island_id!==id||!c.scopes.includes('scene:write'))fail(403,'只有这座岛的编程 Agent 可以返回 hello');if(typeof input.name!=='string'||!input.name.trim()||input.name.length>60||typeof input.message!=='string'||!input.message.trim()||input.message.length>300)fail(400,'请返回 Agent 名字和简短问候');const at=new Date().toISOString();db.prepare('INSERT INTO agent_presence VALUES(?,?,?,?,?,?,?) ON CONFLICT(credential_id) DO UPDATE SET name=excluded.name,hello=excluded.hello,last_seen=excluded.last_seen').run(c.id,c.user_id,id,input.name.trim(),input.message.trim(),at,at);return {received:true,message:'Hello 已送达岛主。请继续轮询 coding-task。'};}
+ function touch(c){db.prepare('UPDATE agent_presence SET last_seen=? WHERE credential_id=?').run(new Date().toISOString(),c.id);}
+ function requireConnected(userId){if(!status(userId).connected)fail(409,'请先连接自己的 Agent，收到 hello 后再开始创造');}
+ return {status,hello,touch,requireConnected};
+}
