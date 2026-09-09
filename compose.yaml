@@ -1,9 +1,12 @@
 services:
   island:
     build: .
+    image: our-island:edge
     restart: unless-stopped
     volumes:
       - island-data:/app/data
+    ports:
+      - "${ISLAND_PUBLISH_PORT:-4174}:4174"
     expose:
       - "4174"
   https:
@@ -20,6 +23,7 @@ services:
       - caddy-config:/config
     depends_on:
       - island
+    profiles: ["secure"]
 volumes:
   island-data:
   caddy-data:
